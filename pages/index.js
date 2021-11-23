@@ -1,24 +1,13 @@
 import axios from 'axios'
+import React from 'react'
 // import styles from '../styles/Home.module.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Button, Card, CardBody, CardImg, CardText, CardTitle } from 'reactstrap'
 import Link from 'next/link'
+import PropTypes from 'prop-types'
 
-export const getStaticProps = async () => {
-  const response = await axios.post('https://backend.sports.info/api/v1/posts/recent')
-  const data = await response?.data
-
-  console.log('data', data)
-  return {
-    props: {
-      data
-    }
-  }
-}
-
-export default function Home ({data}) {
+export default function index ({ data }) {
   const posts = data.data
-  console.log('data', posts)
   return (<>
       {posts.map((data, index) =>
         <Card key={index}>
@@ -31,7 +20,8 @@ export default function Home ({data}) {
           <CardBody>
             <CardTitle tag="h5">
               <Link
-                href='articles/[slug]'
+                href={`articles/${data.sSlug}`}
+                as={`articles/${data.sSlug}`}
               >
                 {data.sTitle}
               </Link>
@@ -59,4 +49,19 @@ export default function Home ({data}) {
       }
     </>
   )
+}
+
+export const getStaticProps = async () => {
+  const response = await axios.post('https://backend.sports.info/api/v1/posts/recent')
+  const data = await response?.data
+
+  return {
+    props: {
+      data
+    }
+  }
+}
+
+index.PropTypes = {
+  data: PropTypes.object
 }
