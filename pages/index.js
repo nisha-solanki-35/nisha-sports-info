@@ -20,8 +20,8 @@ export default function index ({ data }) {
           <CardBody>
             <CardTitle tag="h5">
               <Link
-                href={`articles/${data.sSlug}`}
-                as={`articles/${data.sSlug}`}
+                href={`/${data._id}`}
+                as={`/articles/${data._id}`}
               >
                 {data.sTitle}
               </Link>
@@ -62,6 +62,6 @@ export const getStaticProps = async () => {
   }
 }
 
-index.PropTypes = {
+index.propTypes = {
   data: PropTypes.object
 }
