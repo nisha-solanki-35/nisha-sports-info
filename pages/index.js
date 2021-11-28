@@ -1,7 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.css'
-import 'bootstrap/dist/css/bootstrap.min.css'
 import { Button } from 'reactstrap'
 import Link from 'next/link'
 import PropTypes from 'prop-types'
@@ -22,11 +21,26 @@ export default function index ({ data }) {
   }, [start])
 
   const getMoreArticles = async () => {
-    const response = await axios.post('https://backend.sports.info/api/v1/posts/recent',
-      { nStart: start, nLimit: limit, eSort: 'Latest', bRemoveBannerPosts: true })
-    const data = await response?.data
+    const data = await axios('https://backend.sports.info/api/v1/posts/recent', {
+      method: 'POST',
+      data: { nStart: start, nLimit: limit, eSort: 'Latest', bRemoveBannerPosts: true },
+      mode: 'no-cors',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json'
+      },
+      withCredentials: true,
+      credentials: 'same-origin'
+    }).then(response => {
+      return response.data
+    })
+
+    // const response = await axios.post('https://backend.sports.info/api/v1/posts/recent',
+    //   { nStart: start, nLimit: limit, eSort: 'Latest', bRemoveBannerPosts: true })
+    // const data = await response?.data
 
     setArticles(data.data)
+    console.log('data.data', data.data)
   }
 
   return (<>

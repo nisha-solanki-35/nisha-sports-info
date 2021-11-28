@@ -143,3 +143,12 @@
   text-align: center;
   margin-bottom: 50px;
 }
+
+.articleImage {
+  background-repeat:no-repeat;
+  background-size:contain;
+}
+
+.article_section {
+  margin-top: 100px;
+}
