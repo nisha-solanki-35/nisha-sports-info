@@ -152,3 +152,28 @@
 .article_section {
   margin-top: 100px;
 }
+
+.view, .comment {
+  height: 25px;
+  width: 25px;
+  margin-right: 5px;
+  color: black;
+}
+
+.icon_text {
+  margin-right: 10px;
+  color: black;
+}
+
+.text a {
+  color: black;
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: none;
+  margin-bottom: 30px;
+}
+
+.loader {
+  text-align: center;
+  margin-bottom: 30px;
+}
