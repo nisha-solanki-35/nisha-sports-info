@@ -1,11 +1,11 @@
 import axios from 'axios'
 import React, { useEffect, useRef, useState } from 'react'
-import styles from '../styles/Home.module.css'
 import { Button, Container } from 'reactstrap'
 import Link from 'next/link'
 import PropTypes from 'prop-types'
-import Image from 'next/image'
 import Loader from 'react-loader-spinner'
+import Navbar from '../components/Navbar'
+import styles from '../styles/index.module.css'
 
 export default function index ({ data }) {
   const [start, setStart] = useState(0)
@@ -21,7 +21,7 @@ export default function index ({ data }) {
   }, [data])
 
   useEffect(() => {
-    if(start && start >= 4) {
+    if (start && start >= 4) {
       getMoreArticles()
       setLoading(true)
     }
@@ -45,20 +45,14 @@ export default function index ({ data }) {
     const response = await axios.post('https://backend.sports.info/api/v1/posts/recent',
       { nStart: start, nLimit: limit, eSort: 'Latest', bRemoveBannerPosts: true })
     const data = await response?.data?.data
-    console.log(`articles`, articles)
+    console.log('articles', articles)
     setArticles([...articles, ...data])
     setLoading(false)
     return articles
   }
 
   return (<Container>
-      <Image
-        src='/sportsinfo.svg'
-        width={100}
-        height={100}
-        className={styles.logo}
-      >
-      </Image>
+    <Navbar />
       {previousProps.articles !== articles && articles.map((data, index) =>
       <section key={index} className={styles.common_box}>
         <div className='d-flex justify-content-start'>
@@ -89,13 +83,15 @@ export default function index ({ data }) {
             </div>
         </section>)
       }
-      {loading ? <Loader
-        type='Rings'
-        color='black'
-        height={70}
-        width={70}
-        className={styles.loader}
-      /> : <div className={styles.load_more_button}>
+      {loading
+        ? <Loader
+          type='Rings'
+          color='black'
+          height={70}
+          width={70}
+          className={styles.loader}
+        />
+        : <div className={styles.load_more_button}>
       <Button color='danger' onClick={() => setStart(start + 4)}>Load More</Button>
     </div>}
     </Container>

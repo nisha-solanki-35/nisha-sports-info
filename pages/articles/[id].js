@@ -1,39 +1,56 @@
 import React from 'react'
 // import PropTypes from 'prop-types'
 import axios from 'axios'
-import styles from '../../styles/Home.module.css'
 import { Container } from 'reactstrap'
 import { useRouter } from 'next/router'
 import Loader from 'react-loader-spinner'
+import Navbar from '../../components/Navbar'
 
 const id = ({ data }) => {
   const router = useRouter()
   const articleDetails = data && data.data
 
   if (router.isFallback) {
-    return(
+    return (
       <Loader
         type='Rings'
         color='black'
         height={90}
         width={90}
-        className={styles.loader}
+        className='loader'
       />
     )
   } else {
-  return (
+    return (
     <Container>
-      <div className={styles.article_section}>
+      <Navbar />
+      <div>
         <img
           alt='Image not found'
-          className={styles.articleImage}
+          className='articleImage'
           src={articleDetails.sImage}
         />
         <h3 className='mt-5'>{articleDetails.sTitle}</h3>
         <div dangerouslySetInnerHTML={{ __html: articleDetails.sDescription }}></div>
       </div>
+      <style jsx>
+        {
+          `
+          .articleImage {
+            background-repeat:no-repeat;
+            background-size:contain;
+          }
+
+          .loader {
+            text-align: center;
+            margin-bottom: 30px;
+          }
+          `
+        }
+      </style>
     </Container>
-  )}
+    )
+  }
 }
 
 export async function getStaticPaths () {
